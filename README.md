@@ -1,58 +1,31 @@
-# HTTP/AJAX
+## HTTP Mini Sprint
 
-Topics:
+### Topics
+  * Axios for making HTTP requests
+  * Redux-Promise library
+  * JavaScript Promises
 
- * `axios` package
- * AJAX
- * Promises
- * Middleware
- * `redux-promise` package
+In this mini sprint, you'll be eased into the code base for the actual HTTP sprint. Upon cloning this repository down, take a moment to look over the different pieces that are already in here. There shouldn't be anything too scary; it's just another React app that was created with `create-react-app`. The important bits are the actions, components, and reducers directories.
 
-## Project Description
+To run the mini sprint code, first run `npm install` in the root directory. Then run `node server.js`. In _another_ terminal, cd into the `http` directory, run `npm install`, then `npm start`. You'll see that we have a non-functioning React/Redux app with some compilation errors. 
 
-### Initialize Project
-  * Run `npm i` inside the root directory of this project.  Run `node server.js` to start the server.
-  * Run `create-react-app friends` in in a separate terminal window in the root directory of the project to create your starter application.
-  * Run `npm i --save redux react-redux redux-promise axios`, which will install the needed dependencies.
-  * You will create a list of your friends using React and Redux.
-  * The general flow of steps will be to create your action creator functions, your reducers, then your React components.
-  * Don't forget to hook up the store using the `Provider` tag inside of `src/index.js`, passing it your root reducer.
-  * You will need to use `Redux Promise` as a middleware inside of `src/index.js`.
-  * Create two actions.  One action will retrieve the friends list from the server.  The second action will add a new friend to the friends list on the server.
+The FriendsList component renders an array of friend objects. This array needs to be fetched from an external server. Your job for this mini sprint is to complete the GET request in order to populate the FriendsList component. Inside `index.js` in the actions directory, there is a `getFriends` action creator. This is where the GET request should go. Since Redux-Promise is already in place (you can see it being applied in the app's main `index.js` file), you'll follow the pattern we talked about at the end of the lecture. In case you missed it, it looks like this:
 
+```
+const action = () => {
+    const promise = axios.get('http://example.com');
+    return {
+        type: ACTION_TYPE,
+        payload: promise
+    };
+};
+```
 
-### State Tree
-  * Your application should have an input field, a submit button, and a list of items that represents your friends list.  Make each friend a separate component.
-  * Your application's state tree should have a single property called `friends`.  It should take the same form as the object shown below.
-   ```
-  {
-    friends: [],
-  }
-  ```
-  * Each `friend` item that is in the `friends` array should have the following format:
-  ```
-  {
-    name: 'Stephanie',
-    age: 24,
-    email: 'stephanie@gmail.com',
-  }
-  ```
+Hint: The URL you want to be fetching from is `http://localhost:5000/friends`. 
 
+Once you get through the sprint and have the list of friends being rendered by the FriendsList component, take some time to do some reading on Promises, Ajax, and any of the other topics we touched upon during the lecture. 
 
-### React
-  * When you type a new friend's name into the input field and press the submit button you should call an action creator that adds a new friend item to the `friends` array on the application state tree.
-  * When the user presses submit you will invoke the appropriate action creator which will then have its new action fed through all of the reducers.
-  * You will display the friends list by creating a container that receives the application's `friends` array as a prop.  That container then uses `map` to display the array.
-
-
-### Notes/Hints
- * You will only need one reducer.  This reducer will control the `friends` array property on the state tree.
- * You will have several action creators.  One for adding a new friend and another for retrieving the friends list from the server.
- * Containers require `connect` and a `mapStateToProps(state)` function to read from the state tree.
- * Actions require you to create a `mapDispatchToProps(dispatch)` function that you'll also pass to the `connect` function.
-
-
-## Extra Credit
- * In the requirements for this project, we implemented a GET operation and a POST operation. Add two more actions, one for making a PUT request, and the other for making a DELETE request. 
- * Style the friends list and the input field and make everything look nice.
- * Expand the number of properties that you put on each friend object.  Feel free to remove the dummy data on the server or modify it in any way.
+### Helpful Links
+  * [Promises for Dummies](https://scotch.io/tutorials/javascript-promises-for-dummies) -- A pretty thorough and cohesive writeup on Promises. I would suggest starting here first.
+  * [AJAX Documentation on MDN](https://developer.mozilla.org/en-US/docs/AJAX) -- A good place to start reading about and delving into the different parts that make up the AJAX standard.
+  * [JavaScript Promises Plain and Simple](https://coligo.io/javascript-promises-plain-simple/) -- This article talks about using Promises in the context of making HTTP requests, which means it's pretty perfect for our use case. Note that in their examples they use the `fetch` API, which is an alternative to Axios.
